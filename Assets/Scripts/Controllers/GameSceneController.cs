@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class GameSceneController : MonoBehaviour
 {
-
+    public void Initialize()
+    {
+        
+    }
 }
