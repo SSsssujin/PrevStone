@@ -497,8 +497,6 @@ namespace Gamekit3D
             // If Ellen is on the ground...
             if (m_IsGrounded)
             {
-                Debug.Log(m_Animator.deltaPosition);
-
                 // ... raycast into the ground...
                 RaycastHit hit;
                 Ray ray = new Ray(transform.position + Vector3.up * k_GroundedRayDistance * 0.5f, -Vector3.up);

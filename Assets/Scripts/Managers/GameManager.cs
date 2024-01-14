@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private GameSceneController _gameSceneController;
+    private ESSceneController _gameSceneController;
 
     void Start()
     {
