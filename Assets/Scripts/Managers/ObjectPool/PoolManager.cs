@@ -43,7 +43,7 @@ class Pool
         }
         catch (Exception e)
         {
-            Debug.LogError(go.name);
+            Debug.LogError(e + " : " + go.name);
             go.name = "Error Obj";
         }
     }
