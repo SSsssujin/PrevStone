@@ -44,7 +44,6 @@ public class GameSceneController : MonoBehaviour
             enteringTransform.position = entranceLocation.position;
             enteringTransform.rotation = entranceLocation.rotation;
         };
-
     }
 
     private IEnumerator _cSceneTransition(string newSceneName, SceneTag tag)
@@ -78,10 +77,10 @@ public class GameSceneController : MonoBehaviour
 
     }
 
-    private void _SetZoneStart(SceneTransitionDestination entrance)
+    private void _SetZoneStart(GameSceneDestination entrance)
     {
-        m_CurrentZoneScene = entrance.gameObject.scene;
-        m_ZoneRestartDestinationTag = entrance.destinationTag;
+        _currentScene = entrance.gameObject.scene;
+        _destinationTag = entrance.Tag;
     }
 
 }
