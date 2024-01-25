@@ -9,9 +9,11 @@ public class ESPlayerController : MonoBehaviour
 {
     private static ESPlayerController _instance;
 
-    private float Gravity = 20;
-    private float JumpSpeed = 10f;
-    private float MaxForwardSpeed = 5f;
+    public float Gravity = 20;
+    public float JumpSpeed = 10f;
+    public float MaxForwardSpeed = 2.5f;
+    public float MinTurnSpeed = 400f;      
+    public float MaxTurnSpeed = 1200f;   
 
     public ESPlayerCameraSettings cameraSettings;
 
@@ -23,10 +25,17 @@ public class ESPlayerController : MonoBehaviour
     private float _forwardSpeed;
     private float _desiredForwardSpeed;
 
+    private Quaternion _targetRotation;
+    private float _angleDiff;    
+
     private const float _stickingGravityProportion = 0.3f;
     private const float _groundedRayDistance = 1f;
     private const float _groundAcceleration = 20f;
     private const float _groundDeceleration = 25f;
+    const float c_InverseOneEighty = 1f / 180f;
+    const float c_AirborneTurnSpeedProportion = 5.4f;
+
+    Vector3 deltaPosition, previousPosition;
 
     private bool IsMoveInput => !Mathf.Approximately(_playerInput.MoveInput.sqrMagnitude, 0f);
 
@@ -45,13 +54,17 @@ public class ESPlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        CalculateForwardMovement();
-        CalculateVerticalMovement();
+        _CalculateForwardMovement();
+        _CalculateVerticalMovement();
+        
+        _SetTargetRotation();
+        
+        if (IsMoveInput)
+            UpdateOrientation();
 
         _MoveCharacter();
     }
 
-    Vector3 deltaPosition, previousPosition;
 
     void _MoveCharacter()
     {
@@ -89,7 +102,7 @@ public class ESPlayerController : MonoBehaviour
         _isGrounded = _characterController.isGrounded;
     }
 
-    void CalculateForwardMovement()
+    void _CalculateForwardMovement()
     {
         Vector2 moveInput = _playerInput.MoveInput;
         if (moveInput.sqrMagnitude > 1f)
@@ -105,7 +118,7 @@ public class ESPlayerController : MonoBehaviour
         _forwardSpeed = Mathf.MoveTowards(_forwardSpeed, _desiredForwardSpeed, acceleration * Time.deltaTime);
     }
 
-    void CalculateVerticalMovement()
+    void _CalculateVerticalMovement()
     {
         if (_isGrounded)
         {
@@ -128,6 +141,49 @@ public class ESPlayerController : MonoBehaviour
         }
     }
 
+    void _SetTargetRotation()
+    {
+        Vector2 moveInput = _playerInput.MoveInput;
+        Vector3 localMovementDirection = new Vector3(moveInput.x, 0f, moveInput.y).normalized;
+
+        Vector3 forward = Quaternion.Euler(0f, cameraSettings.keyboardAndMouseCamera.m_XAxis.Value, 0f) * Vector3.forward;
+        forward.y = 0f;
+        forward.Normalize();
+
+        Quaternion targetRotation;
+            
+        // If the local movement direction is the opposite of forward then the target rotation should be towards the camera.
+        if (Mathf.Approximately(Vector3.Dot(localMovementDirection, Vector3.forward), -1.0f))
+        {
+            targetRotation = Quaternion.LookRotation(-forward);
+        }
+        else
+        {
+            // Otherwise the rotation should be the offset of the input from the camera's forward.
+            Quaternion cameraToInputOffset = Quaternion.FromToRotation(Vector3.forward, localMovementDirection);
+            targetRotation = Quaternion.LookRotation(cameraToInputOffset * forward);
+        }
+
+        Vector3 resultingForward = targetRotation * Vector3.forward;
+        
+        // Find the difference between the current rotation of the player and the desired rotation of the player in radians.
+        float angleCurrent = Mathf.Atan2(transform.forward.x, transform.forward.z) * Mathf.Rad2Deg;
+        float targetAngle = Mathf.Atan2(resultingForward.x, resultingForward.z) * Mathf.Rad2Deg;
+
+        _angleDiff = Mathf.DeltaAngle(angleCurrent, targetAngle);
+        _targetRotation = targetRotation;
+    }
+
+    void UpdateOrientation()
+    {
+        Vector3 localInput = new Vector3(_playerInput.MoveInput.x, 0f, _playerInput.MoveInput.y);
+        float groundedTurnSpeed = Mathf.Lerp(MaxTurnSpeed, MinTurnSpeed, _forwardSpeed / _desiredForwardSpeed);
+        float actualTurnSpeed = _isGrounded ? groundedTurnSpeed : Vector3.Angle(transform.forward, localInput) * c_InverseOneEighty * c_AirborneTurnSpeedProportion * groundedTurnSpeed;
+        _targetRotation = Quaternion.RotateTowards(transform.rotation, _targetRotation, actualTurnSpeed * Time.deltaTime);
+        
+        transform.rotation = _targetRotation;
+    }
+    
 
     public static ESPlayerController Instance => _instance;
 }
