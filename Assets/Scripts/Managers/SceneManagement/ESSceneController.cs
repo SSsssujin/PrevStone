@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Design.Serialization;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using SceneTag = GameSceneDestination.SceneTag;
+using SceneTag = ESSceneTransitionDestination.SceneTag;
 
 public class ESSceneController : MonoBehaviour
 {
@@ -28,20 +28,15 @@ public class ESSceneController : MonoBehaviour
     private Scene _currentScene;
     private SceneTag _destinationTag;
 
-    public void Initialize()
-    {
-
-    }
-
     public static void TransitionToScene(ESSceneTransitionPoint transitionPoint)
     {
         Debug.Log(Instance == null);
         Instance.StartCoroutine(Instance._cSceneTransition(transitionPoint.NewScene)); //, transitionPoint.transitionDestinationTag));
     }
 
-    private GameSceneDestination GetDestination(SceneTag destinationTag)
+    private ESSceneTransitionDestination GetDestination(SceneTag destinationTag)
     {
-        GameSceneDestination[] entrances = FindObjectsOfType<GameSceneDestination>();
+        ESSceneTransitionDestination[] entrances = FindObjectsOfType<ESSceneTransitionDestination>();
         for (int i = 0; i < entrances.Length; i++)
         {
             if (entrances[i].Tag == destinationTag)
@@ -51,7 +46,7 @@ public class ESSceneController : MonoBehaviour
         return null;
     }
 
-    private void _SetEnteringGameObjectLocation(GameSceneDestination entrance)
+    private void _SetEnteringGameObjectLocation(ESSceneTransitionDestination entrance)
     {
         if (entrance == null)
         {
@@ -80,36 +75,36 @@ public class ESSceneController : MonoBehaviour
         Debug.Log("Fade start");
         yield return ESSceneFader.Instance.Fade(false);
 
-        // 4. Load new scene -> «ˆ¿Á string, ≥™¡ﬂø° æÓµÂ∑πº≠∫Ì∑Œ πŸ≤‹∞Õ
+        // 4. Load new scene -> ÌòÑÏû¨ string, ÎÇòÏ§ëÏóê Ïñ¥ÎìúÎ†àÏÑúÎ∏îÎ°ú Î∞îÍøÄÍ≤É
         yield return SceneManager.LoadSceneAsync(newSceneName);
 
         // Block new player input
+        GameManager.Instance.SetupNewScene();
 
         // 5. Start new scene
-        //GameSceneDestination entrance = GetDestination(tag);
-        //_SetEnteringGameObjectLocation(entrance);
-        //_SetupNewScene(/* type */ entrance);
-        //entrance.OnReachDestination?.Invoke();
+        ESSceneTransitionDestination entrance = GetDestination(tag);
+        _SetEnteringGameObjectLocation(entrance);
+        _SetupNewScene(/* type */ entrance);
+        entrance.OnReachDestination?.Invoke();
 
         // Fade scene
-        yield return ESSceneFader.Instance.Fade(true);
+        //yield return ESSceneFader.Instance.Fade(true);
         Debug.Log("Fade end");
-
-        // ªı∑Œ √£æ∆æﬂµ 
+        
+        // ÏÉàÎ°ú Ï∞æÏïÑÏïºÎê®
         //ESPlayerInput.Instance?.GainControl();
 
         _isTransitioning = false;
     }
 
-    private void _SetupNewScene(GameSceneDestination entrance)
+    private void _SetupNewScene(ESSceneTransitionDestination entrance)
     {
         _SetZoneStart(entrance);
     }
 
-    private void _SetZoneStart(GameSceneDestination entrance)
+    private void _SetZoneStart(ESSceneTransitionDestination entrance)
     {
         _currentScene = entrance.gameObject.scene;
         _destinationTag = entrance.Tag;
     }
-
 }

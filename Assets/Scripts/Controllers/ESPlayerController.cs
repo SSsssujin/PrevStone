@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Rendering.HybridV2;
 using UnityEngine;
 
 [RequireComponent(typeof(ESPlayerInput))]
@@ -14,7 +13,7 @@ public class ESPlayerController : MonoBehaviour
     private float JumpSpeed = 10f;
     private float MaxForwardSpeed = 5f;
 
-    public PlayerCameraSettings cameraSettings;
+    public ESPlayerCameraSettings cameraSettings;
 
     private CharacterController _characterController;
     private ESPlayerInput _playerInput;

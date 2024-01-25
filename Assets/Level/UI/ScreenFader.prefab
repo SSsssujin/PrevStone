@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8697064787395731557}
   - component: {fileID: 7397923304976083695}
   - component: {fileID: 2668345175757374913}
+  - component: {fileID: -3613304591975062600}
   m_Layer: 5
   m_Name: ScreenFader
   m_TagString: Untagged
@@ -76,3 +77,15 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &-3613304591975062600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8951024433922620506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0642040923e06124199910555d639b70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -6,11 +6,20 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance;
+    
+    public ESSceneController GameSceneController => _gameSceneController;
+    
     private ESSceneController _gameSceneController;
 
-    void Start()
+    void Awake()
     {
         DontDestroyOnLoad(gameObject);
     }
 
+    // 이거 비동기로 구현해줘
+    public void SetupNewScene()
+    {
+        FindObjectOfType<IGameScene>().Initialize();
+    }
 }
