@@ -204,7 +204,7 @@ namespace Gamekit3D
 #if UNITY_EDITOR
         private void OnDrawGizmosSelected()
         {
-            Gizmos.DrawWireSphere(transform.position, explosionRadius);
+             Gizmos.DrawWireSphere(transform.position, explosionRadius);
         }
 #endif
     }

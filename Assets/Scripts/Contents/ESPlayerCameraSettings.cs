@@ -52,10 +52,10 @@ public class ESPlayerCameraSettings : MonoBehaviour
         keyboardAndMouseCamera.m_XAxis.m_InvertInput = keyboardAndMouseInvertSettings.invertX;
         keyboardAndMouseCamera.m_YAxis.m_InvertInput = keyboardAndMouseInvertSettings.invertY;
         
-        // controllerCamera.m_XAxis.m_InvertInput = controllerInvertSettings.invertX;
-        // controllerCamera.m_YAxis.m_InvertInput = controllerInvertSettings.invertY;
-        // controllerCamera.Follow = FollowTarget;
-        // controllerCamera.LookAt = LookTarget;
+        controllerCamera.m_XAxis.m_InvertInput = controllerInvertSettings.invertX;
+        controllerCamera.m_YAxis.m_InvertInput = controllerInvertSettings.invertY;
+        controllerCamera.Follow = FollowTarget;
+        controllerCamera.LookAt = LookTarget;
 
         // keyboardAndMouseCamera.Priority = inputChoice == InputChoice.KeyboardAndMouse ? 1 : 0;
         // controllerCamera.Priority = inputChoice == InputChoice.Controller ? 1 : 0;
