@@ -15,9 +15,9 @@ public class ESPlayerController : MonoBehaviour
     public float MinTurnSpeed = 400f;      
     public float MaxTurnSpeed = 1200f;   
 
-    public ESPlayerCameraSettings cameraSettings;
-
     private CharacterController _characterController;
+
+    public ESPlayerCameraSettings cameraSettings;
     private ESPlayerInput _playerInput;
 
     private bool _isGrounded;
@@ -29,15 +29,13 @@ public class ESPlayerController : MonoBehaviour
     private Quaternion _targetRotation;
     private float _angleDiff;    
 
-    private const float _stickingGravityProportion = 0.3f;
+    private const float c_stickingGravityProportion = 0.3f;
     private const float c_groundedRayDistance = 1f;
-    private const float _groundAcceleration = 20f;
-    private const float _groundDeceleration = 25f;
-    const float c_InverseOneEighty = 1f / 180f;
-    const float c_AirborneTurnSpeedProportion = 5.4f;
-    const float c_JumpAbortSpeed = 10f;
-
-    Vector3 deltaPosition, previousPosition;
+    private const float c_groundAcceleration = 20f;
+    private const float c_groundDeceleration = 25f;
+    private const float c_InverseOneEighty = 1f / 180f;
+    private const float c_AirborneTurnSpeedProportion = 5.4f;
+    private const float c_JumpAbortSpeed = 10f;
 
     private bool IsMoveInput => !Mathf.Approximately(_playerInput.MoveInput.sqrMagnitude, 0f);
 
@@ -81,17 +79,8 @@ public class ESPlayerController : MonoBehaviour
 
     void _MoveCharacter()
     {
-        Vector3 movement;
-        Vector3 move = new Vector3(_playerInput.MoveInput.x,0, _playerInput.MoveInput.y);
+        Vector3 movement = transform.position;
 
-        // Position
-        Vector3 currentPosition = transform.position;
-        //Vector3 deltaPosition = currentPosition - lastFramePosition;
-        
-        // Rotation
-        Quaternion currentRotation = transform.rotation;
-        Quaternion deltaRotation = currentRotation * Quaternion.Inverse(lastFrameRotation);
-        
         if (_isGrounded)
         {
             RaycastHit hit;
@@ -99,13 +88,12 @@ public class ESPlayerController : MonoBehaviour
             if (Physics.Raycast(ray, out hit, c_groundedRayDistance, Physics.AllLayers, QueryTriggerInteraction.Ignore))
             {
                 Debug.Log("Ground");
-                movement = Vector3.ProjectOnPlane(deltaPosition, hit.normal);
+                movement = Vector3.ProjectOnPlane(_forwardSpeed * transform.forward * Time.deltaTime, hit.normal);
             }
             else
             {
 
                 movement = transform.forward * _forwardSpeed * Time.deltaTime;
-                // movement = deltaPosition; // move * 0.1f; //Speed
             }
         }
         else
@@ -119,14 +107,9 @@ public class ESPlayerController : MonoBehaviour
 
         movement += _verticalSpeed * Vector3.up * Time.deltaTime;
 
-        previousPosition = transform.position;
-
         _characterController.Move(movement);
 
         _isGrounded = _characterController.isGrounded;
-
-        lastFrameRotation = currentRotation;
-        lastFramePosition = currentPosition;
     }
 
     void _CalculateForwardMovement()
@@ -138,7 +121,7 @@ public class ESPlayerController : MonoBehaviour
         }
 
         _desiredForwardSpeed = moveInput.magnitude * MaxForwardSpeed;
-        float acceleration = IsMoveInput ? _groundAcceleration : _groundDeceleration;
+        float acceleration = IsMoveInput ? c_groundAcceleration : c_groundDeceleration;
         _forwardSpeed = Mathf.MoveTowards(_forwardSpeed, _desiredForwardSpeed, acceleration * Time.deltaTime);
     }
 
@@ -149,7 +132,7 @@ public class ESPlayerController : MonoBehaviour
         
         if (_isGrounded)
         {
-            _verticalSpeed = -Gravity * _stickingGravityProportion;
+            _verticalSpeed = -Gravity * c_stickingGravityProportion;
 
             if (_playerInput.JumpInput && _isJumpable)
             {
