@@ -1,13 +1,16 @@
 using System;
+using UnityEngine;
 
-public class CharacterBase : ManagedMonoBehaviour
+public class CharacterBase : ManagedMonoBehaviour, IDamageable
 {
+    protected CharacterData CharacterData;
+    
     protected float _speed;
     
     public int Hp { get; set; } = 100;
     public int MaxHp { get; set; } = 100;
 
-    protected float _attackPower;
+    public float _attackPower;
     protected float _attackSpeed;
     
     public SkillBook Skills { get; protected set; }
@@ -23,18 +26,21 @@ public class CharacterBase : ManagedMonoBehaviour
         return true;
     }
 
-    protected virtual void _OnDamaged(ManagedMonoBehaviour attacker, int damage)
+    //protected virtual void _OnDamaged(ManagedMonoBehaviour attacker, int damage)
+    public virtual void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
     {
         if (Hp <= 0)
             return;
         
-        Hp -= damage;
+        Hp -= (int)damage;
 
         if (Hp <= 0)
         {
             Hp = 0;
             _OnDead();
         }
+        
+        Debug.Log($"{damage} 데미지 발생, 남은 HP : {Hp}");        
     }
     
     protected virtual void _OnDead()

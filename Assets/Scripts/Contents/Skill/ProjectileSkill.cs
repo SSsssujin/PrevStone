@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,14 +8,14 @@ public class ProjectileSkill : SkillBase
     private CharacterBase _owner;
     
     private Vector3 _moveDir;
-    private float _speed = 100f;
+    private float _speed = 1f;
     private float _lifeTime = 3.0f;
 
     public override bool Init()
     {
         base.Init();
         
-        _StartDestroy(_lifeTime);
+        //_StartDestroy(_lifeTime);
 
         return true;
     }
@@ -38,5 +39,15 @@ public class ProjectileSkill : SkillBase
     protected override void DoSkillJob()
     {
         _GenerateProjectile(_owner, _owner.transform.position, _moveDir);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        IDamageable target = other.GetComponentInChildren<IDamageable>();
+
+        if (target != null)
+        {
+            target.OnDamage(_owner._attackPower, transform.position, (transform.position - other.transform.position).normalized);
+        }
     }
 }

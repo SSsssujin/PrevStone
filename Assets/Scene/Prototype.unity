@@ -17459,6 +17459,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd82884382363b14894f5fc1056f24c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _attackPower: 0
 --- !u!136 &885877707
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -17474,7 +17475,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -17849,6 +17850,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd82884382363b14894f5fc1056f24c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _attackPower: 0
 --- !u!136 &1348852352
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -17954,6 +17956,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a14d1fa70c593c147b7473781d3f7111, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _attackPower: 1
 --- !u!1001 &1994347334
 PrefabInstance:
   m_ObjectHideFlags: 0

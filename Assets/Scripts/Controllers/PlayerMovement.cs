@@ -5,9 +5,9 @@ using UnityEngine;
 
 [RequireComponent(typeof(ESPlayerInput))]
 [RequireComponent(typeof(CharacterController))]
-public class ESPlayerMoveController : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
-    private static ESPlayerMoveController _instance;
+    private static PlayerMovement _instance;
 
     public float Gravity = 20;
     public float JumpSpeed = 10f;
@@ -191,5 +191,5 @@ public class ESPlayerMoveController : MonoBehaviour
     }
     
 
-    public static ESPlayerMoveController Instance => _instance;
+    public static PlayerMovement Instance => _instance;
 }

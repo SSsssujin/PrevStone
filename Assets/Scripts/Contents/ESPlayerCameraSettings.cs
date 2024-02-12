@@ -34,14 +34,14 @@ public class ESPlayerCameraSettings : MonoBehaviour
         if (controllerCameraTransform != null)
             controllerCamera = controllerCameraTransform.GetComponent<CinemachineFreeLook>();
 
-        ESPlayerMoveController playerMoveController = FindObjectOfType<ESPlayerMoveController>();
-        if (playerMoveController != null && playerMoveController.name == "Ellen")
+        PlayerMovement playerMovement = FindObjectOfType<PlayerMovement>();
+        if (playerMovement != null && playerMovement.name == "Ellen")
         {
-            FollowTarget = playerMoveController.transform;
+            FollowTarget = playerMovement.transform;
             LookTarget = FollowTarget.Find("HeadTarget");
 
-            if (playerMoveController.cameraSettings == null)
-                playerMoveController.cameraSettings = this;
+            if (playerMovement.cameraSettings == null)
+                playerMovement.cameraSettings = this;
         }
     }
 

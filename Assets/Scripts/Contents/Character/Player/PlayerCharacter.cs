@@ -7,13 +7,15 @@ public class PlayerCharacter : CharacterBase
 {
     private int _level;
     private int _skillPoint;
-
+    
     // 발사간격
     private float _attackInterval = 0.12f;
     private float _lastAttackTime;
-    
+
+    private ESPlayerController _playerController;
+    // 밑에 있는 애들 PlayerController 통해서 다시 캐싱하기
     private ESPlayerInput _playerInput;
-    private ESPlayerMoveController _playerMoveController;
+    private PlayerMovement _playerMovement;
     
     private Camera _camera;
 
@@ -27,7 +29,7 @@ public class PlayerCharacter : CharacterBase
 
         _camera = Camera.main;
         _playerInput = GetComponent<ESPlayerInput>();
-        _playerMoveController = GetComponent<ESPlayerMoveController>();
+        _playerMovement = GetComponent<PlayerMovement>();
         Skills.AddSkill<ProjectileSkill>(this, transform.position);
         
         return true;
@@ -41,6 +43,8 @@ public class PlayerCharacter : CharacterBase
             GameObject bullet = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             bullet.transform.localScale = Vector3.one * 0.1f;
             bullet.transform.position = transform.position;
+            bullet.DemandComponent<Rigidbody>().isKinematic = true;
+            bullet.DemandComponent<Collider>().isTrigger = true;
             var ps = bullet.DemandComponent<ProjectileSkill>();
             ps.Init();
 
