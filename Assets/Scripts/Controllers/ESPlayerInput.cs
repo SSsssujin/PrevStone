@@ -9,6 +9,7 @@ public class ESPlayerInput : MonoBehaviour
     public static ESPlayerInput Instance => _instance;
 
     private bool _isJump;
+    private bool _isFire;
 
     private bool _isExternalInputBlocked;
     private bool _isPlayerInputBlocked;
@@ -24,8 +25,8 @@ public class ESPlayerInput : MonoBehaviour
     private void Update()
     {
         _movement.Set(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        
         _isJump = Input.GetButton("Jump");
+        _isFire = Input.GetButton("Fire1");
     }
 
     public void ReleaseControl()
@@ -41,4 +42,6 @@ public class ESPlayerInput : MonoBehaviour
     public Vector2 MoveInput => _isExternalInputBlocked || _isPlayerInputBlocked ? Vector2.zero : _movement;
     
     public bool JumpInput => _isJump;
+
+    public bool IsFire => _isFire;
 }
