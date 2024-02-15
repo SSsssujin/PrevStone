@@ -6,7 +6,8 @@ public class MonsterCharacter : CharacterBase
 {
     protected override void _OnDead()
     {
-        _DropLoot(); 
+        base._OnDead();
+        _DropLoot();
     }
 
     private void _DropLoot()

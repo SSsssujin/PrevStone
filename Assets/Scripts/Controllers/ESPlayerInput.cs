@@ -8,6 +8,7 @@ public class ESPlayerInput : MonoBehaviour
     private static ESPlayerInput _instance;
     public static ESPlayerInput Instance => _instance;
 
+    private int _selectedNum;
     private bool _isJump;
     private bool _isFire;
 

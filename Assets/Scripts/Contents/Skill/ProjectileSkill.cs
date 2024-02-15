@@ -8,14 +8,14 @@ public class ProjectileSkill : SkillBase
     private CharacterBase _owner;
     
     private Vector3 _moveDir;
-    private float _speed = 1f;
-    private float _lifeTime = 3.0f;
+    private float _speed = 10f;
+    private float _lifeTime = 10f;
 
     public override bool Init()
     {
         base.Init();
         
-        //_StartDestroy(_lifeTime);
+        _StartDestroy(_lifeTime);
 
         return true;
     }
@@ -44,10 +44,6 @@ public class ProjectileSkill : SkillBase
     private void OnTriggerEnter(Collider other)
     {
         IDamageable target = other.GetComponentInChildren<IDamageable>();
-
-        if (target != null)
-        {
-            target.OnDamage(_owner._attackPower, transform.position, (transform.position - other.transform.position).normalized);
-        }
+        target?.OnDamage(_owner._attackPower, transform.position, (transform.position - other.transform.position).normalized);
     }
 }

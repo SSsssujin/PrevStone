@@ -6,9 +6,30 @@ using UnityEngine.Serialization;
 
 public class ESPlayerController : ManagedMonoBehaviour
 {
+    private static ESPlayerController _instance;
+
+    public static ESPlayerController Instance
+    {
+        get
+        {
+            if (_instance is null)
+            {
+                _instance = GameObject.Find("Player").GetComponent<ESPlayerController>();
+            }
+            return _instance;
+        }
+    }
+    
     public PlayerCharacter PlayerCharacter;
     public PlayerMovement PlayerMovement;
     public ESPlayerInput PlayerInput;
+
+    private void Reset()
+    {
+        PlayerCharacter = GetComponent<PlayerCharacter>();
+        PlayerMovement = GetComponent<PlayerMovement>();
+        PlayerInput = GetComponent<ESPlayerInput>();
+    }
 
     protected override void _UpdateController()
     {
@@ -19,4 +40,6 @@ public class ESPlayerController : ManagedMonoBehaviour
     {
         
     }
+
+    public Action<int> OnAlphaNumPressed;
 }

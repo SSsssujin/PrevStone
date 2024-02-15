@@ -26,7 +26,9 @@ public class PlayerCharacter : CharacterBase
     {
         if (base.Init() == false)
             return false;
-
+        
+        Cursor.lockState = CursorLockMode.Locked;
+        
         _camera = Camera.main;
         _playerInput = GetComponent<ESPlayerInput>();
         _playerMovement = GetComponent<PlayerMovement>();
@@ -35,6 +37,8 @@ public class PlayerCharacter : CharacterBase
         return true;
     }
 
+    public ESPlayerCameraSettings CameraSettings;
+    
     protected override void _UpdateController()
     {
         if (_playerInput.IsFire && _canAttack)
@@ -43,24 +47,42 @@ public class PlayerCharacter : CharacterBase
             GameObject bullet = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             bullet.transform.localScale = Vector3.one * 0.1f;
             bullet.transform.position = transform.position;
-            bullet.DemandComponent<Rigidbody>().isKinematic = true;
             bullet.DemandComponent<Collider>().isTrigger = true;
             var ps = bullet.DemandComponent<ProjectileSkill>();
             ps.Init();
 
-            // Get Direction
-            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Vector3 shootingDirection;
-            if (Physics.Raycast(ray, out var hit, Mathf.Infinity, ~LayerMask.GetMask("Player")))
-            {
-                Vector3 targetPoint = hit.point;
-                shootingDirection = (targetPoint - transform.position).normalized;
-            }
-            else
-            {
-                shootingDirection = ray.direction;
-            }
-            ps.SetInfo(0, this, shootingDirection);
+            // 충돌 정보 저장용 컨테이너
+            RaycastHit hit;
+
+            // 탄알이 맞은 위치
+            // Vector3 hitPosition = Vector3.zero;
+            //
+            // if (Physics.Raycast(transform.position, transform.forward, out hit, fireDistance))
+            // {
+            //     // 레이가 어떤 물체와 충돌 시
+            //     IDamageable target = hit.collider.GetComponent<IDamageable>();
+            //
+            //     if (target != null)
+            //     {
+            //         target.OnDamage(damage, hit.point, hit.normal);
+            //     }
+            //
+            //     hitPosition = hit.point;
+            // }
+            // else
+            // {
+            //     // 충돌 X 시
+            //     // 충돌 포지션 == 탄알이 최대 사정거리까지 날아갔을 때의 위치
+            //     hitPosition = fireTransform.position + fireTransform.forward * fireDistance;
+            // }
+            //
+            // Vector3 forward = Quaternion.Euler(0f, CameraSettings.keyboardAndMouseCamera.m_XAxis.Value, 0f) * Vector3.forward;
+            // forward.y = 0f;
+            // forward.Normalize();
+            //
+            // // Get Direction
+            // var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            ps.SetInfo(0, this,transform.forward);
             
             _lastAttackTime = Time.time;
             

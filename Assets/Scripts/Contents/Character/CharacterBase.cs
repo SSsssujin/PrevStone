@@ -7,8 +7,8 @@ public class CharacterBase : ManagedMonoBehaviour, IDamageable
     
     protected float _speed;
     
-    public int Hp { get; set; } = 100;
-    public int MaxHp { get; set; } = 100;
+    public int Hp { get; set; } = 30;
+    public int MaxHp { get; set; } = 30;
 
     public float _attackPower;
     protected float _attackSpeed;
@@ -40,11 +40,13 @@ public class CharacterBase : ManagedMonoBehaviour, IDamageable
             _OnDead();
         }
         
-        Debug.Log($"{damage} 데미지 발생, 남은 HP : {Hp}");        
+        Debug.Log($"{gameObject}에게 {damage} 데미지 발생, 남은 HP : {Hp}");        
     }
     
     protected virtual void _OnDead()
     {
         OnDeath?.Invoke();   
+        
+        Managers.Object.Despawn<CharacterBase>(this);
     }
 }
