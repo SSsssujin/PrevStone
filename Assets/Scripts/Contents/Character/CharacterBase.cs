@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CharacterBase : ManagedMonoBehaviour, IDamageable
 {
-    protected CharacterData CharacterData;
+    //protected CharacterData CharacterData;
     
     protected float _speed;
     
