@@ -10,6 +10,7 @@ public class PlayerCharacter : CharacterBase
     private ESPlayerController _playerController;
 
     public PlayerCharacterData _playerData;
+    public ESPlayerCameraSettings CameraSettings;
     
     // 밑에 있는 애들 PlayerController 통해서 다시 캐싱하기
     private ESPlayerInput _playerInput;
@@ -21,17 +22,12 @@ public class PlayerCharacter : CharacterBase
         if (base.Init() == false)
             return false;
 
-        //ESPlayerController.Instance.OnAlphaNumPressed += 
-        
         _playerInput ??= GetComponent<ESPlayerInput>();
         _playerMovement ??= GetComponent<PlayerMovement>();
-        
-        //Skills.AddSkill<ProjectileSkill>(this, transform.position);
         
         return true;
     }
 
-    public ESPlayerCameraSettings CameraSettings;
     
     protected override void _UpdateController()
     {

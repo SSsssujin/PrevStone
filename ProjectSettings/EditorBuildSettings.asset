@@ -12,12 +12,6 @@ EditorBuildSettings:
     path: Assets/Scene/Level1.unity
     guid: 420430110b731ab44a86bfc71f7165ba
   - enabled: 1
-    path: Assets/Temp.unity
-    guid: 81eb0970377c9eb4a98280cf681210e1
-  - enabled: 1
-    path: Assets/Dev.unity
-    guid: a127de9602965324fa31f206d4e561d4
-  - enabled: 1
     path: Assets/Scene/Prototype.unity
     guid: bb95382405eb0df498fd5791e7a34339
   m_configObjects:

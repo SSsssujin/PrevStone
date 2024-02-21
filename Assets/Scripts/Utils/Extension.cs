@@ -16,4 +16,14 @@ public static class Extension
     {
         return bc != null && bc.isActiveAndEnabled;
     }
+
+    public static void ResetWorld(this Transform target)
+    {
+        target.position = Vector3.zero;
+    }
+    
+    public static void ResetLocal(this Transform target)
+    {
+        target.localPosition = Vector3.zero;
+    }
 }

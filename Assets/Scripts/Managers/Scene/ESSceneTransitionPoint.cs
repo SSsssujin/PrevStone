@@ -20,6 +20,6 @@ public class ESSceneTransitionPoint : MonoBehaviour
 
     public void Transition()
     {
-        ESSceneController.TransitionToScene(this);
+        //ESSceneController.TransitionToScene(this);
     }
 }

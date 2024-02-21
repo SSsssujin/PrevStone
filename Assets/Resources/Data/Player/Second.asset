@@ -10,13 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74e24c0fd1c374247a496d2c0b368304, type: 3}
-  m_Name: Fifth
+  m_Name: Second
   m_EditorClassIdentifier: 
   TemplateID: 0
-  Name: 
-  MaxHP: 0
+  Name: Rock_02
+  Model: {fileID: 0}
+  MaxHP: 100
   AttackPower: 0
-  AttackSpeed: 0
+  AttackSpeed: 5
   DefensePower: 0
   JumpPower: 0
   MoveSpeed: 0
+  Skiils: []

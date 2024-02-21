@@ -1,30 +1,42 @@
-using System;
-using Gamekit3D;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
 
-    public PlayerController PlayerController;
+    [Space]
     
-    public ESSceneController GameSceneController => _gameSceneController;
-    
-    private ESSceneController _gameSceneController;
+    // Scene
+    [Header("Scene Transition")]
+    [SceneName] public string NextScene;
+    private bool _isTransitioning;
 
-    void Awake()
+    public void Initialize() { }
+
+    private void Start()
     {
         DontDestroyOnLoad(gameObject);
-        //Cursor.lockState = CursorLockMode.Locked;
+        
+        Cursor.lockState = CursorLockMode.Locked;
+
+        // Transition 조건 수정해주기
+        StartCoroutine(nameof(_cSetUpNewScene));
     }
 
-    // 이거 비동기로 구현해줘
-    public void SetupNewScene()
+    private IEnumerator _cSetUpNewScene()
     {
-        FindObjectOfType<IGameScene>().Initialize();
+        yield return null;
+
+        // var gameSceneInfo = FindFirstObjectByType<GameScene>();
+        //
+        // // Load
+        // //yield return SceneManager.LoadSceneAsync(gameSceneInfo.NextScene);
+        //
+        // // Initialize
+        // gameSceneInfo.Initialize();
+        // yield return new WaitUntil (() => gameSceneInfo.IsLoadComplete == true);
+        // OnSceneLoadComplete?.RaiseEvent();
     }
 
     private void Update()
@@ -35,6 +47,11 @@ public class GameManager : MonoBehaviour
             {
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
+            }
+            
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                StartCoroutine(nameof(_cSetUpNewScene));
             }
         }
     }

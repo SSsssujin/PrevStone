@@ -14,6 +14,11 @@ public class Managers : MonoBehaviour
     private PoolManager _pool = new();
     private ResourceManager _resource = new();
 
+    private void Awake()
+    {
+       // Game.Initialize();
+    }
+
     public static GameManager Game => Instance._game;
 
     public static ObjectManager Object => Instance._object; 
@@ -30,11 +35,11 @@ public class Managers : MonoBehaviour
                 if (go == null)
                 {
                     go = new GameObject() { name = "Managers" };
-                    go.AddComponent<Managers>();
+                    go.DemandComponent<Managers>();
                 }
                 
                 DontDestroyOnLoad(go);
-                _instance = go.GetComponent<Managers>();
+                _instance = go.DemandComponent<Managers>();
                 _init = true;
             }
 

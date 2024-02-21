@@ -16,7 +16,55 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: d1d95be66b9506546939e1474f53a0e4
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: b1d62b49cc727eb40b1494c297907993
+    m_Address: Rock_06
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4026597ae9660a34a9b90336b711a784
+    m_Address: Rock_05
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9371120c7dc85f5469e2afd238a55f40
+    m_Address: Rock_04
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ae151594ed96b354da60d779a54652e0
+    m_Address: Rock_03
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ef2be9b5132dfec41b3ae7dfac462ee9
+    m_Address: Rock_02
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 77217c21e36064846af8ceda06b48059
+    m_Address: Rock_01
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 33afc5b2d345c474dbbc7cd19bd34115
+    m_Address: PlayerCamera
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Player
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 34a31c40c715f304e8716eef1a60290f
+    m_Address: Player
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Player
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: de902391b03e64a41b5f7cea7402fbbf, type: 2}
   m_SchemaSet:

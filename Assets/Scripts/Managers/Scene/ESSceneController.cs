@@ -1,13 +1,18 @@
-using Gamekit3D;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel.Design.Serialization;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using SceneTag = ESSceneTransitionDestination.SceneTag;
 
 public class ESSceneController : MonoBehaviour
 {
+    [SceneName]
+    public string NewScene;
+
+    public void Transition()
+    {
+        TransitionToScene();
+    }
+    
     private static ESSceneController _instance;
 
     public static ESSceneController Instance
@@ -28,15 +33,14 @@ public class ESSceneController : MonoBehaviour
     private Scene _currentScene;
     private SceneTag _destinationTag;
 
-    public static void TransitionToScene(ESSceneTransitionPoint transitionPoint)
+    private void TransitionToScene()
     {
-        Debug.Log(Instance == null);
-        Instance.StartCoroutine(Instance._cSceneTransition(transitionPoint.NewScene)); //, transitionPoint.transitionDestinationTag));
+        Instance.StartCoroutine(Instance._cSceneTransition(NewScene)); //, transitionPoint.transitionDestinationTag));
     }
 
     private ESSceneTransitionDestination GetDestination(SceneTag destinationTag)
     {
-        ESSceneTransitionDestination[] entrances = FindObjectsOfType<ESSceneTransitionDestination>();
+        ESSceneTransitionDestination[] entrances = FindObjectsByType<ESSceneTransitionDestination>(FindObjectsSortMode.InstanceID);
         for (int i = 0; i < entrances.Length; i++)
         {
             if (entrances[i].Tag == destinationTag)
@@ -79,7 +83,7 @@ public class ESSceneController : MonoBehaviour
         yield return SceneManager.LoadSceneAsync(newSceneName);
 
         // Block new player input
-        GameManager.Instance.SetupNewScene();
+        //GameManager.Instance.SetupNewScene();
 
         // 5. Start new scene
         ESSceneTransitionDestination entrance = GetDestination(tag);

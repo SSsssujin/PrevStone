@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(ESPlayerInput))]
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
@@ -12,8 +11,8 @@ public class PlayerMovement : MonoBehaviour
     public float Gravity = 20;
     public float JumpSpeed = 10f;
     public float MaxForwardSpeed = 8f;
-    public float MinTurnSpeed = 400f;      
-    public float MaxTurnSpeed = 1200f;   
+    public float MinTurnSpeed = 1000f;      
+    public float MaxTurnSpeed = 12000f;   
 
     private CharacterController _characterController;
 
@@ -28,7 +27,6 @@ public class PlayerMovement : MonoBehaviour
     private float _angleDiff;
     
     private Quaternion _targetRotation;
-    public Vector3 TargetRotation => _targetRotation.eulerAngles;
 
     private const float c_stickingGravityProportion = 0.3f;
     private const float c_groundedRayDistance = 1f;
@@ -40,11 +38,10 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsMoveInput => !Mathf.Approximately(_playerInput.MoveInput.sqrMagnitude, 0f);
 
-    private void Awake()
+    private void Start()
     {
         _characterController = GetComponent<CharacterController>();
         _playerInput = GetComponent<ESPlayerInput>();
-
         _instance = this;
     }
 

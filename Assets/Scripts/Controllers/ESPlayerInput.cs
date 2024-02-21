@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class ESPlayerInput : MonoBehaviour
 {
-    private static ESPlayerInput _instance;
-    public static ESPlayerInput Instance => _instance;
-
     private int _selectedNum;
     private bool _isJump;
     private bool _isFire;
@@ -16,12 +13,6 @@ public class ESPlayerInput : MonoBehaviour
     private bool _isPlayerInputBlocked;
 
     private Vector2 _movement;
-
-    private void Awake()
-    {
-        _instance = this;
-    }
-
 
     private void Update()
     {

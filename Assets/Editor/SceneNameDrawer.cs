@@ -2,8 +2,6 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Gamekit3D
-{
     [CustomPropertyDrawer(typeof(SceneNameAttribute))]
     public class SceneNameDrawer : PropertyDrawer
     {
@@ -66,4 +64,3 @@ namespace Gamekit3D
             property.stringValue = m_SceneNames[m_SceneIndex].text;
         }
     }
-}

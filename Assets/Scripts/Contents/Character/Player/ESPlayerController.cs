@@ -4,24 +4,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
+[RequireComponent(typeof(ESPlayerInput),typeof(PlayerMovement), typeof(PlayerCharacter))]
 public class ESPlayerController : ManagedMonoBehaviour
 {
     private static ESPlayerController _instance;
 
+    // Temp
     [SerializeField]
     private List<PlayerCharacterData> _playerParty;
-    private PlayerCharacterData _prevPlayer, _curPlayer;
-    
-    private PlayerCharacter _playerCharacter;
+
+    [Header("Listen to Event Channels")] 
+    [SerializeField]
+    private VoidEventChannelSO OnSceneLoadComplete;
+
     private PlayerMovement _playerMovement;
     private ESPlayerInput _playerInput;
+    private PlayerCharacter _playerCharacter;
 
     private int _skillPoint;
 
-
     private void Start()
     {
-        _UpdatePlayerCharacter(1);
+        OnSceneLoadComplete.OnEventRaised += () => _UpdatePlayerCharacter(1);
+        OnSceneLoadComplete.OnEventRaised += _FindPlayerPosition;
+        _Initialize();
     }
 
     private void Reset()
@@ -31,9 +37,19 @@ public class ESPlayerController : ManagedMonoBehaviour
         _playerInput = GetComponent<ESPlayerInput>();
     }
 
+    private void _Initialize()
+    {
+        
+    }
+
     public void ResetPlayerParty()
     {
         
+    }
+
+    private void _FindPlayerPosition()
+    {
+        transform.position = GameObject.Find("Position").transform.Find("Player").position;
     }
 
     protected override void _UpdateController()
@@ -50,14 +66,19 @@ public class ESPlayerController : ManagedMonoBehaviour
 
     private void _UpdatePlayerCharacter(int pressedNum)
     {
-        if (_playerCharacter == null)
-            _playerCharacter = GetComponent<PlayerCharacter>();
+        _playerCharacter ??= GetComponent<PlayerCharacter>();
+
+        int playerIndex = pressedNum - 1;
+
+        if (_playerParty.IndexOf(_playerCharacter._playerData) == playerIndex)
+        {
+            Debug.Log("Same Character summoned already");
+            return;
+        }
         
-        _playerCharacter.UpdatePlayerData(_playerParty[pressedNum - 1]);
+        _playerCharacter.UpdatePlayerData(_playerParty[playerIndex]);
     }
-    
-    public Action<int> OnAlphaNumPressed;
-    
+
     public PlayerCharacter PlayerCharacter => Instance._playerCharacter;
     public PlayerMovement PlayerMovement => Instance._playerMovement;
     public ESPlayerInput PlayerInput => Instance._playerInput;
