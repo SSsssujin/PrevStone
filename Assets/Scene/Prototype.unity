@@ -17124,8 +17124,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d436901fd616b4428a1c43d3ade59ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnSceneLoadComplete: {fileID: 11400000, guid: 7e1a1b4ba62b8b348b6091fe027328cb,
-    type: 2}
   NextScene: Start
 --- !u!114 &405175307
 MonoBehaviour:
@@ -17151,6 +17149,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b3e0468c8c5ed940bbb9b1924850398, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnSceneLoadComplete: {fileID: 11400000, guid: 7e1a1b4ba62b8b348b6091fe027328cb,
+    type: 2}
   _sceneList: {fileID: 11400000, guid: c88992bea6092774f86c8b3584df0071, type: 2}
 --- !u!1001 &498483959
 PrefabInstance:
